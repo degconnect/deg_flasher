@@ -1,0 +1,2 @@
+#!/bin/bash
+dmesg | grep -Poi "(?<=amdgpu\:\s)(\d+)(?=M of VRAM)" | awk '{print $1/1024}' | xargs
