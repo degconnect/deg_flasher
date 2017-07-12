@@ -31,17 +31,54 @@ def get_from_atiflash():
     return ret
 
 
+def stripped(s):
+    bad = ['[', ']']
+    for ch in bad:
+        s = s.replace(ch, '')
+    return s.strip()
+
+
 def get_gpu_list():
-    pass
+    proc = subprocess.Popen(['./gpu-info'], stdout=subprocess.PIPE)
+    out, err = proc.communicate()
+
+    proc1 = subprocess.Popen(['sudo', 'bin/amdmeminfo', '-o', '-s', '-q'], stdout=subprocess.PIPE)
+    out1, err1 = proc1.communicate()
+
+    lst1 = out.splitlines()
+    lst2 = out1.splitlines()
+    ret = []
+    for l, m in zip(lst1, lst2):
+        lst = l.split(' ')
+        model = ' '.join(lst[2:4])
+        memory = m.split(':')[4]
+        memory = memory.split('-')[0].split(' ')[:-1]
+        memory = ' '.join(memory)
+        ret.append(
+            (lst[0], lst[1], stripped(model), memory)
+        )
+    return ret
+
+
+def get_cards():
+    vrams = get_vrams()
+    cards = get_from_atiflash()
+    gpus = get_gpu_list()
+    ret = []
+    for card, vram, gpu in zip(cards, vrams, gpus):
+        card['vram-size'] = vram
+        card['id'] = gpu[0]
+        card['model-1'] = gpu[2]
+        card['memory'] = gpu[3]
+        ret.append(card)
+    return ret
 
 
 def main():
-    vrams = get_vrams()
-    cards = get_from_atiflash()
-    for card, vram in zip(cards, vrams):
-        card['vram-size'] = vram
+    cards = get_cards()
+    for card in cards:
         print card
-    print "Done"
+    print "Done!!!"
 
 
 if __name__ == "__main__":
