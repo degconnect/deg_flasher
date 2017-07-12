@@ -13,8 +13,34 @@ def get_vrams():
     return ""
 
 
+def get_from_atiflash():
+    proc = subprocess.Popen(['sudo', 'atiflash', '-i'], stdout=subprocess.PIPE)
+    out, err = proc.communicate()
+
+    lst = out.splitlines()
+    ret = []
+    for s in lst[3:]:
+        row = [l for l in s.split(' ') if l]
+        ret.append({
+            'ssid': row[3],
+            'model': row[4],
+            'flash-type': row[5],
+            'rom-size': row[6],
+            'bios-version': row[8],
+        })
+    return ret
+
+
+def get_gpu_list():
+    pass
+
+
 def main():
-    print get_vrams()
+    vrams = get_vrams()
+    cards = get_from_atiflash()
+    for card, vram in zip(cards, vrams):
+        card['vram-size'] = vram
+        print card
     print "Done"
 
 
