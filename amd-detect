@@ -93,11 +93,17 @@ def backup(card):
     """
     :param card:
     :return:
-    backup ROMusing ATIFLASH and send the backup to our servers
+    backup ROM using ATIFLASH and send the backup to our servers
+    todo: send backup to server attached to the machine that generated it
     """
     filename = gen_rom_filename(card)
     print "Backup card: {0}: {1} to file: {2}".format(card['ix'], card['model-1'], filename)
-    print
+    proc = subprocess.Popen(['sudo', 'atiflash', '-s', str(card['ix']), filename], stdout=subprocess.PIPE)
+    out, err = proc.communicate()
+    print out
+    if err:
+        print "err:", err
+
 
 
 def flash(card):
@@ -107,6 +113,8 @@ def flash(card):
     get the modded rom from our servers and flash into the card using atiflash
     """
     print "flashing card: {0} -> {1}".format(card['ix'], card['model-1'])
+    print "="*40
+    print 
 
 
 def main():
