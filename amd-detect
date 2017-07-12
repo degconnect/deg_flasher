@@ -79,13 +79,25 @@ def can_be_flash(card):
     return card['model'] == 'Ellesmere'
 
 
+def gen_rom_filename(card):
+    mem_size = card['vram-size']
+    rom_size = int(card['rom-size'])/10000
+    bios_version = card['bios-version']
+    bios_version = bios_version.replace('.', '-')
+    ret = "{}-{}GB-{}-{}GB-ROM-{}.rom".format(card['model-1'], mem_size, card['memory'], rom_size, bios_version)
+    ret = ret.replace(' ', '-')
+    return ret
+
+
 def backup(card):
     """
     :param card:
     :return:
     backup ROMusing ATIFLASH and send the backup to our servers
     """
-    print "Backup card: {0}: {1}".format(card['ix'], card['model-1'])
+    filename = gen_rom_filename(card)
+    print "Backup card: {0}: {1} to file: {2}".format(card['ix'], card['model-1'], filename)
+    print
 
 
 def flash(card):
