@@ -82,7 +82,7 @@ def can_be_flash(card):
 
 def gen_rom_filename(card):
     mem_size = card['vram-size']
-    rom_size = int(card['rom-size'])/10000
+    rom_size = card['rom-size']
     bios_version = card['bios-version']
     bios_version = bios_version.replace('.', '-')
     ret = "{}-{}GB-{}-{}GB-ROM-{}.rom".format(card['model-1'], mem_size, card['memory'], rom_size, bios_version)
