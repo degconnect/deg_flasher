@@ -134,7 +134,7 @@ def flash(card):
         else:
             print "The modded rom is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
-            print "please, allow 1 business day before contacting us."
+            print "Please, allow 1 business day before contacting us."
 
 
 def main():
