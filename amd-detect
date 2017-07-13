@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import subprocess
-from comm import get_modded
+from comm import get_modded, save_backup
 
 
 def get_vrams():
@@ -22,11 +22,12 @@ def get_from_atiflash():
     ret = []
     for s in lst[3:]:
         row = [l for l in s.split(' ') if l]
+        rom_size = int(row[6])/10000
         ret.append({
             'ssid': row[3],
             'model': row[4],
             'flash-type': row[5],
-            'rom-size': row[6],
+            'rom-size': rom_size,
             'bios-version': row[8],
         })
     return ret
@@ -103,6 +104,8 @@ def backup(card):
     print out
     if err:
         print "err:", err
+    else:
+        save_backup(filename, card)
 
 
 def real_flash(filename, card_index):
@@ -126,7 +129,8 @@ def flash(card):
     if ret in ['s', 'S']:
         filename = get_modded(card)
         if filename:
-            real_flash(filename, card['ix'])
+            print "real flashing!!!!"
+            # real_flash(filename, card['ix'])
         else:
             print "The modded rom is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
