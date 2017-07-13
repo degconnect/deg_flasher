@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import subprocess
-from time import sleep
+from comm import get_modded
 
 
 def get_vrams():
@@ -105,6 +105,13 @@ def backup(card):
         print "err:", err
 
 
+def real_flash(filename, card_index):
+    proc = subprocess.Popen(['sudo', 'atiflash', '-p', str(card_index), filename], stdout=subprocess.PIPE)
+    out, err = proc.communicate()
+    print out
+    if err:
+        print "err:", err
+
 
 def flash(card):
     """
@@ -112,15 +119,29 @@ def flash(card):
     :return:
     get the modded rom from our servers and flash into the card using atiflash
     """
-    print "flashing card: {0} -> {1}".format(card['ix'], card['model-1'])
+    msg = "Press any key for flashing card: {0} -> {1}. Press S for skip this card.".format(card['ix'], card['model-1'])
+    ret = raw_input(msg)
     print "="*40
-    print 
+    print
+    if ret in ['s', 'S']:
+        filename = get_modded(card)
+        if filename:
+            real_flash(filename, card['ix'])
+        else:
+            print "The modded rom is not ready just yet."
+            print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
+            print "please, allow 1 business day before contacting us."
 
 
 def main():
     print "DEG Flasher only works for Ellesmere RX 470/480/570/580"
     print "Please, remember to put all the cards in OC Mode. Check that and stop this if not in OC Mode."
-    sleep(3)
+    print "Stop mining or using your cards in any way before using this software!!!"
+    ret = raw_input("Press Q to Quit and other key to continue: ")
+    ret = ret.lower().strip()
+    if ret in ['q', 'quit']:
+        print "Bye"
+        return
     print "Detecting all cards"
     cards = get_cards()
     flash_list, unknown = [], []
