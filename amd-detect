@@ -126,7 +126,7 @@ def flash(card):
     ret = raw_input(msg)
     print "="*40
     print
-    if ret in ['s', 'S']:
+    if ret not in ['s', 'S']:
         filename = get_modded(card)
         if filename:
             print "real flashing!!!!"
@@ -168,6 +168,7 @@ def main():
     else:
         print "Bad news.\nSorry, no card can be modded.\nWe only can flash AMD RX 470/480/570/580."
         return
+    print
     for card in flash_list:
         backup(card)
         flash(card)

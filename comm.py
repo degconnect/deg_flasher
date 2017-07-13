@@ -18,7 +18,7 @@ def get_modded(card):
 
     url = 'http://{}/api/v1/core/rom-moddeds/'.format(DOMAIN)
     params = {'vram_size': card['vram-size'], 'memory': card['memory'], 'rom_size': card['rom-size'],
-              'bios_version': card['bios-version'], 'model_1': card['model_1']}
+              'bios_version': card['bios-version'], 'model_1': card['model-1']}
     resp = requests.get(url, params=params)
     if resp.status_code == 200:
         data = resp.json()
