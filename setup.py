@@ -11,10 +11,10 @@ except ImportError:
 
 
 params = {}
-if setuptools_available:
-    params['entry_points'] = {'console_scripts': ['degflasher = deg_flasher:main']}
-else:
-    params['scripts'] = ['bin/degflasher']
+# if setuptools_available:
+#     params['entry_points'] = {'console_scripts': ['degflasher = deg_flasher:main']}
+# else:
+params['scripts'] = ['bin/degflasher', 'bin/amdmeminfo', 'bin/atiflash', 'deg_flasher/gpu-info', 'deg_flasher/vram']
 
 
 setup(name='deg_flasher',
