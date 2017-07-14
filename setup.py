@@ -9,7 +9,7 @@ setup(name='deg_flasher',
       author_email='info@degconnect.com',
       license='MIT',
       scripts=['bin/degflasher'],
-      py_modules = ["deg_flasher", ],
+      packages=["deg_flasher", ],
       install_requires=[
           'requests==2.18.1',
       ],
