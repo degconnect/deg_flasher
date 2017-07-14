@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+
+import deg_flasher
+
+print deg_flasher.amd_flash()
