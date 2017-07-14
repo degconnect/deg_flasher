@@ -9,9 +9,9 @@ except ImportError:
 
 params = {}
 if setuptools_available:
-        params['entry_points'] = {'console_scripts': ['youtube-dl = youtube_dl:main']}
-    else:
-        params['scripts'] = ['bin/youtube-dl']
+    params['entry_points'] = {'console_scripts': ['youtube-dl = youtube_dl:main']}
+else:
+    params['scripts'] = ['bin/youtube-dl']
 
 
 setup(name='deg_flasher',
