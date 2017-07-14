@@ -1,4 +1,6 @@
 from setuptools import setup
+import os.path
+import warnings
 
 try:
     from setuptools import setup, Command
@@ -6,6 +8,7 @@ try:
 except ImportError:
     from distutils.core import setup, Command
     setuptools_available = False
+
 
 params = {}
 if setuptools_available:
