@@ -2,4 +2,6 @@
 
 import deg_flasher
 
-print deg_flasher.amd_flash()
+
+if __name__ == '__main__':
+    deg_flasher.amd_flash()
