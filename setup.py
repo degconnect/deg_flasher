@@ -9,9 +9,9 @@ except ImportError:
 
 params = {}
 if setuptools_available:
-    params['entry_points'] = {'console_scripts': ['youtube-dl = youtube_dl:main']}
+    params['entry_points'] = {'console_scripts': ['degflasher = degflasher:main']}
 else:
-    params['scripts'] = ['bin/youtube-dl']
+    params['scripts'] = ['bin/degflasher']
 
 
 setup(name='deg_flasher',
@@ -22,7 +22,6 @@ setup(name='deg_flasher',
       author='DEGConnect',
       author_email='info@degconnect.com',
       license='MIT',
-      scripts=['bin/degflasher'],
       packages=["deg_flasher", ],
       install_requires=[
           'requests==2.18.1',
