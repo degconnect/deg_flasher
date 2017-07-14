@@ -1,20 +1,4 @@
 from setuptools import setup
-import os.path
-import warnings
-
-try:
-    from setuptools import setup, Command
-    setuptools_available = True
-except ImportError:
-    from distutils.core import setup, Command
-    setuptools_available = False
-
-
-params = {}
-# if setuptools_available:
-#     params['entry_points'] = {'console_scripts': ['degflasher = deg_flasher:main']}
-# else:
-params['scripts'] = ['bin/degflasher', 'bin/amdmeminfo', 'bin/atiflash', 'deg_flasher/gpu-info', 'deg_flasher/vram']
 
 
 setup(name='deg_flasher',
@@ -30,4 +14,4 @@ setup(name='deg_flasher',
           'requests==2.18.1',
       ],
       zip_safe=False,
-      **params)
+      scripts=['bin/degflasher', 'bin/amdmeminfo', 'bin/atiflash', 'bin/gpu-info', 'bin/vram'])

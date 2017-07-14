@@ -1,5 +1,0 @@
-include bin/amdmeminfo
-include bin/atiflash
-include bin/degflasher
-include deg_flasher/gpu-info
-include deg_flasher/vram

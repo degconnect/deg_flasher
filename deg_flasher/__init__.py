@@ -6,7 +6,7 @@ from deg_flasher.comm import get_modded, save_backup
 
 
 def get_vrams():
-    proc = subprocess.Popen(['./vram'], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(['vram'], stdout=subprocess.PIPE)
     out, err = proc.communicate()
 
     if not err:
@@ -42,10 +42,10 @@ def stripped(s):
 
 
 def get_gpu_list():
-    proc = subprocess.Popen(['./gpu-info'], stdout=subprocess.PIPE)
+    proc = subprocess.Popen(['gpu-info'], stdout=subprocess.PIPE)
     out, err = proc.communicate()
 
-    proc1 = subprocess.Popen(['sudo', 'bin/amdmeminfo', '-o', '-s', '-q'], stdout=subprocess.PIPE)
+    proc1 = subprocess.Popen(['sudo', 'amdmeminfo', '-o', '-s', '-q'], stdout=subprocess.PIPE)
     out1, err1 = proc1.communicate()
 
     lst1 = out.splitlines()
