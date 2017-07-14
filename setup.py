@@ -9,7 +9,7 @@ except ImportError:
 
 params = {}
 if setuptools_available:
-    params['entry_points'] = {'console_scripts': ['degflasher = degflasher:main']}
+    params['entry_points'] = {'console_scripts': ['degflasher = deg_flasher:main']}
 else:
     params['scripts'] = ['bin/degflasher']
 
