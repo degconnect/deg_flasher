@@ -176,5 +176,9 @@ def amd_flash():
 
     print "Done!!!"
 
-if __name__ == "__main__":
+
+def main():
     amd_flash()
+
+if __name__ == "__main__":
+    main()
