@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import subprocess
-from comm import get_modded, save_backup
+
+from deg_flasher.comm import get_modded, save_backup
 
 
 def get_vrams():
@@ -120,10 +121,11 @@ def flash(card):
     """
     :param card:
     :return:
-    get the modded rom from our servers and flash into the card using atiflash
+    get the modded ROM from our servers and flash into the card using atiflash
     """
-    msg = "Press any key for flashing card: {0} -> {1}. Press S for skip this card.".format(card['ix'], card['model-1'])
+    msg = "Press any key for flashing card: {0} -> {1}. Press S<ENTER> for skip this card.".format(card['ix'], card['model-1'])
     ret = raw_input(msg)
+    print
     print "="*40
     print
     if ret not in ['s', 'S']:
@@ -132,49 +134,6 @@ def flash(card):
             print "real flashing!!!!"
             # real_flash(filename, card['ix'])
         else:
-            print "The modded rom is not ready just yet."
+            print "The modded ROM is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
             print "Please, allow 1 business day before contacting us."
-
-
-def main():
-    print "DEG Flasher only works for Ellesmere RX 470/480/570/580"
-    print "Please, remember to put all the cards in OC Mode. Check that and stop this if not in OC Mode."
-    print "Stop mining or using your cards in any way before using this software!!!"
-    ret = raw_input("Press Q to Quit and other key to continue: ")
-    ret = ret.lower().strip()
-    if ret in ['q', 'quit']:
-        print "Bye"
-        return
-    print "Detecting all cards"
-    cards = get_cards()
-    flash_list, unknown = [], []
-    ix = 0
-    print "#\tModel\tFlash Type\tROM Size\tMemory Type\tVRAM Size\tBios Version"
-    for card in cards:
-        card['ix'] = ix
-        ix += 1
-        if can_be_flash(card):
-            flash_list.append(card)
-        else:
-            unknown.append(card)
-        print "{}\t{}\t{}\t{}\t\t{}\t\t{}\t{}".format(card['ix'], card['model-1'], card['flash-type'],
-                                                      card['rom-size'], card['memory'], card['vram-size'],
-                                                      card['bios-version'])
-    if len(flash_list) == len(cards):
-        print "Good News!!!\nAll your cards can be modded!!!!"
-    elif flash:
-        print "Not all your cards can be modded!\nWe only can flash AMD RX 470/480/570/580."
-    else:
-        print "Bad news.\nSorry, no card can be modded.\nWe only can flash AMD RX 470/480/570/580."
-        return
-    print
-    for card in flash_list:
-        backup(card)
-        flash(card)
-
-    print "Done!!!"
-
-
-if __name__ == "__main__":
-    main()

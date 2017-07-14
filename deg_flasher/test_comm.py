@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from comm import get_modded, save_backup
+from deg_flasher.comm import get_modded, save_backup
 
 
 def test_get_modded():
