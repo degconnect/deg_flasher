@@ -12,7 +12,7 @@ DEFAULT_PASSWORD = os.environ.get('DEFAULT_PASSWORD')
 def get_modded(card):
     """
     d = {'vram_size': 4, 'memory': 'SK Hynix', 'rom_size': 4, 'bios_version': '113-1E366FU-S4J', 'model_1': 'RX 580'}
-    http://panels.degconnect.com/api/v1/core/rom-moddeds/?vram_size=4&memory=SK%20Hynix&rom_size=4&bios_version=113-1E366FU-S4J&model_1=RX%20580
+    http://flasher.degconnect.com/api/v1/core/rom-moddeds/?vram_size=4&memory=SK%20Hynix&rom_size=4&bios_version=113-1E366FU-S4J&model_1=RX%20580
     :return:
     """
 
@@ -24,7 +24,7 @@ def get_modded(card):
         data = resp.json()
         if data:
             download_url = data[0]['download_url']
-            url = 'http://{}/{}'.format(DOMAIN, download_url)
+            url = 'http://{}{}'.format(DOMAIN, download_url)
             lst = url.split('/')
             if lst:
                 name = 'modded-{}'.format(lst[-1])
