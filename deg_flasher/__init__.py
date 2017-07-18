@@ -162,6 +162,7 @@ def amd_flash():
     print "DEG Flasher only works for Ellesmere RX 470/480/570/580"
     print "Please, remember to put all the cards in OC Mode. Check that and stop this if not in OC Mode."
     print "Stop mining or using your cards in any way before using this software!!!"
+    print
     ret = raw_input("Press Q to Quit and other key to continue: ")
     ret = ret.lower().strip()
     if ret in ['q', 'quit']:
