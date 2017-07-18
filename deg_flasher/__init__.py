@@ -152,8 +152,8 @@ def flash(card, auth):
 
 
 def get_username_password():
-    email = raw_input("Type your email followed by ENTER key ")
-    password = getpass.getpass('Enter your password followed by ENTER key ')
+    email = raw_input("Type your email followed by <ENTER> key ")
+    password = getpass.getpass('Enter your password followed by <ENTER> key ')
     return email, password
 
 
