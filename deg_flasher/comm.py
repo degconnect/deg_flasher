@@ -30,6 +30,11 @@ def get_modded(card):
                 name = 'modded-{}'.format(lst[-1])
                 urllib.urlretrieve (url, name)
                 return name
+    else:
+        print "It went wrong trying to get the modded ROM from our servers"
+        print "Status Code:", resp.status_code
+        print "Response:", resp.content
+
 
 
 def save_backup(filename, card):
@@ -49,3 +54,7 @@ def save_backup(filename, card):
         f.close()
     elif resp.status_code == 201:
         print "Backup saved to Deconnect.com servers"
+    else:
+        print "It went wrong trying to backup your ROM to our servers"
+        print "Status Code:", resp.status_code
+        print "Response:", resp.content
