@@ -127,6 +127,7 @@ def real_flash(filename, card_index):
 def flash(card, auth):
     """
     :param card:
+    :param auth: (email, pass)
     :return:
     get the modded ROM from our servers and flash into the card using atiflash
     """
@@ -137,13 +138,13 @@ def flash(card, auth):
     print
     if ret not in ['s', 'S']:
         filename = get_modded(card, auth)
-        if filename:
-            print "Flashing!!!!"
-            real_flash(filename, card['ix'])
-        elif filename == 403:
+        if filename == 403:
             msg = "In order to buy more credit you can go to http://flasher.degconnect.com/buy.\nThanks."
             print msg
             exit()
+        elif filename:
+            print "Flashing!!!!"
+            real_flash(filename, card['ix'])
         else:
             print "The modded ROM is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
