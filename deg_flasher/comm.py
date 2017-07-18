@@ -32,7 +32,7 @@ def get_modded(card, auth):
         data = resp.json()
         if data["detail"] == "You don't have enough credits to get a MODDED ROM.":
             print data["detail"]
-
+            return 403
     else:
         print "It went wrong trying to get the modded ROM from our servers"
         print "Status Code:", resp.status_code
@@ -71,3 +71,5 @@ def get_credits(auth):
         return r['credits']
     else:
         print "Your credentials are wrong!!!"
+        msg = "If you are not register yet in http://{}. Please, go there first and buy credit before using DEGFlasher."
+        print msg.format(DOMAIN)

@@ -140,6 +140,10 @@ def flash(card, auth):
         if filename:
             print "Flashing!!!!"
             real_flash(filename, card['ix'])
+        elif filename == 403:
+            msg = "In order to buy more credit you can go to http://flasher.degconnect.com/buy.\nThanks."
+            print msg
+            exit()
         else:
             print "The modded ROM is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
