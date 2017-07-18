@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 
 import subprocess
+import os
+import getpass
 
-from deg_flasher.comm import get_modded, save_backup
+from deg_flasher.comm import get_modded, save_backup, get_credits
+
+
+DEFAULT_USER = os.environ.get('DEFAULT_USER')
+DEFAULT_PASSWORD = os.environ.get('DEFAULT_PASSWORD')
 
 
 def get_vrams():
@@ -91,9 +97,10 @@ def gen_rom_filename(card):
     return ret
 
 
-def backup(card):
+def backup(card, auth):
     """
     :param card:
+    :param auth  tuple with email and password
     :return:
     backup ROM using ATIFLASH and send the backup to our servers
     todo: send backup to server attached to the machine that generated it
@@ -106,7 +113,7 @@ def backup(card):
     if err:
         print "err:", err
     else:
-        save_backup(filename, card)
+        save_backup(filename, card, auth)
 
 
 def real_flash(filename, card_index):
@@ -117,7 +124,7 @@ def real_flash(filename, card_index):
         print "err:", err
 
 
-def flash(card):
+def flash(card, auth):
     """
     :param card:
     :return:
@@ -129,14 +136,22 @@ def flash(card):
     print "="*40
     print
     if ret not in ['s', 'S']:
-        filename = get_modded(card)
+        filename = get_modded(card, auth)
         if filename:
-            print "real flashing!!!!"
-            # real_flash(filename, card['ix'])
+            print "Flashing!!!!"
+            real_flash(filename, card['ix'])
         else:
             print "The modded ROM is not ready just yet."
             print "We will modify this ROM as soon as possible and notify you when it is ready so you can re-run it."
             print "Please, allow 1 business day before contacting us."
+    print
+
+
+def get_username_password():
+    email = raw_input("Type your email followed by ENTER key ")
+    password = getpass.getpass('Enter your password followed by ENTER key ')
+    return email, password
+
 
 def amd_flash():
     print "DEG Flasher only works for Ellesmere RX 470/480/570/580"
@@ -148,6 +163,7 @@ def amd_flash():
         print "Bye"
         return
     print "Detecting all cards"
+
     cards = get_cards()
     flash_list, unknown = [], []
     ix = 0
@@ -170,9 +186,15 @@ def amd_flash():
         print "Bad news.\nSorry, no card can be modded.\nWe only can flash AMD RX 470/480/570/580."
         return
     print
-    for card in flash_list:
-        backup(card)
-        flash(card)
+    if DEFAULT_USER:
+        auth = (DEFAULT_USER, DEFAULT_PASSWORD)
+    else:
+        auth = get_username_password()
+    card_credits = get_credits(auth)
+    if card_credits is not None:
+        for card in flash_list:
+            backup(card, auth)
+            flash(card, auth)
 
     print "Done!!!"
 
