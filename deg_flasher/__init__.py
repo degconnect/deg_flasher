@@ -2,6 +2,7 @@
 
 import subprocess
 import os
+import re
 import getpass
 
 from deg_flasher.comm import get_modded, save_backup, get_credits
@@ -47,6 +48,29 @@ def stripped(s):
     return s.strip()
 
 
+def exit_msg():
+    raw_input("Type Enter to Exit")
+    exit()
+
+
+def get_models_using_amdmeminfo():
+    proc = subprocess.Popen(['sudo', 'amdmeminfo', '-o'], stdout=subprocess.PIPE)
+    out, err = proc.communicate()
+    if err:
+        print "Error: ", err
+        exit_msg()
+
+    l = re.findall('Found card: \d+:\w+ \w+ \w+ [a-zA-Z0-9_\s\(\)]*', out)
+    ret = []
+    for s in l:
+        first_line = s.splitlines()[0]
+        w = first_line.split('(')[1]
+        model = w.replace('AMD Radeon ', '').replace(')', '')
+        if model:
+            ret.append(model)
+    return ret
+
+
 def get_gpu_list():
     proc = subprocess.Popen(['gpu-info'], stdout=subprocess.PIPE)
     out, err = proc.communicate()
@@ -56,15 +80,21 @@ def get_gpu_list():
 
     lst1 = out.splitlines()
     lst2 = out1.splitlines()
+    lst3 = get_models_using_amdmeminfo()
     ret = []
-    for l, m in zip(lst1, lst2):
+    for l, m, model_amdinfo in zip(lst1, lst2, lst3):
         lst = l.split(' ')
         model = ' '.join(lst[2:4])
+        model = stripped(model)
+        code_name = lst[1]
+        if 'rev' in model:
+            model = model_amdinfo
+            code_name = 'Ellesmere'
         memory = m.split(':')[4]
         memory = memory.split('-')[0].split(' ')[:-1]
         memory = ' '.join(memory)
         ret.append(
-            (lst[0], lst[1], stripped(model), memory)
+            (lst[0], code_name, stripped(model), memory)
         )
     return ret
 
@@ -141,7 +171,7 @@ def flash(card, auth):
         if filename == 403:
             msg = "In order to buy more credit you can go to http://flasher.degconnect.com/buy.\nThanks."
             print msg
-            exit()
+            exit_msg()
         elif filename:
             print "Flashing!!!!"
             real_flash(filename, card['ix'])
@@ -203,6 +233,7 @@ def amd_flash():
             flash(card, auth)
 
     print "Done!!!"
+    exit_msg()
 
 
 def main():
