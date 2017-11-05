@@ -220,7 +220,7 @@ def amd_flash():
         print "{}\t{}\t{}\t{}\t\t{}\t\t{}\t{}".format(card['ix'], card['model-1'], card['flash-type'],
                                                       card['rom-size'], card['memory'], card['vram-size'],
                                                       card['bios-version'])
-    if len(flash_list) == len(cards):
+    if len(flash_list) == len(cards) and len(cards) > 0:
         print "Good News!!!\nAll your cards can be modded!!!!"
     elif flash_list:
         print "Not all your cards can be modded!\nWe only can flash AMD RX 470/480/570/580."
