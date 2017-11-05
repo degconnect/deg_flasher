@@ -4,9 +4,15 @@ import subprocess
 import os
 import re
 import getpass
+import argparse
 
 from deg_flasher.comm import get_modded, save_backup, get_credits
 
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--backup", help="will do backups of cards if 1 but skip backup if 0",
+                    type=int, default=1, choices=[0, 1], action="store")
+args = parser.parse_args()
 
 DEFAULT_USER = os.environ.get('DEFAULT_USER')
 DEFAULT_PASSWORD = os.environ.get('DEFAULT_PASSWORD')
@@ -229,7 +235,8 @@ def amd_flash():
     card_credits = get_credits(auth)
     if card_credits is not None:
         for card in flash_list:
-            backup(card, auth)
+            if args.backup:
+                backup(card, auth)
             flash(card, auth)
 
     print "Done!!!"
