@@ -9,3 +9,5 @@ If the modded BIOS is not there it will backup anyways the BIOS to http://flashe
 ## Installation
 
 pip install https://github.com/degconnect/deg_flasher/archive/master.zip
+
+
