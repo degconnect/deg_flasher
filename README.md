@@ -14,6 +14,15 @@ If the modded BIOS is not there it will backup anyways the BIOS to http://flashe
 
 pip install https://github.com/degconnect/deg_flasher/archive/master.zip
 
+## How to use it
+
+### Go to ethos console and type:
+1- Buy credits at [flasher.degconnect.com](http://flasher.degconnect.com)
+2- disallow && r
+3- degflasher
+4- adjust globalcore and globalmem or mem/cor <hostname> if you have different cards in local.conf
+5- allow && r
+
 ## Known issues
 
 * Doesn't work after the miner have been running for a while so use disallow && r before using degflasher
